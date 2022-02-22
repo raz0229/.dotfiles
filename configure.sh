@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# External dependencies
+# clipit
+# pavucontrol
+# rofi
+# i3status-rust
+# gsimplecal
+# feh
+
+configDIR="$HOME/.config"
+
+# add or remove configuration file in this array
+config=(
+"i3/config" #i3
+"clipit/clipitrc" #clipit
+"fish/functions/fish_greeting.fish" #fish shell
+"gtk-3.0/settings.ini" #gtk3
+"i3status-rust/config.toml" #i3status
+"lvim/config.lua" #lunarvim
+"polybar/config" #polybar
+"rofi/config.rasi" #rofi dmenu
+)
+
+for item in ${config[@]}; do
+	if [ -f $item ]; then
+            echo "=> Linking: $item"
+            unlink $configDIR/$item
+            rm -rf $configDIR/$item # removes default config
+            ln -s $PWD/$item $configDIR/$item
+         else
+            echo "ERROR: $configDIR/$item not found. Please install it first"
+         fi
+done
+
+# for other files outside $configDIR, added manually
+localDIR="$HOME/.local/share"
+
+# fish_history: $HOME/.local/share/fish/fish_history
+if [ -f "$localDIR/fish/fish_history" ]; then
+	echo "=> Linking: fish/fish_history"
+	unlink $localDIR/fish/fish_history
+	rm -rf $localDIR/fish/fish_history
+	ln -s $PWD/share/fish/fish_history $localDIR/fish/fish_history
+else
+	echo "ERROR: $localDIR/fish/fish_history not found. Please install it first"
+fi
+
+# wallpaper
+feh --bg-scale "$PWD/cosmos.jpg"
+
+# end
