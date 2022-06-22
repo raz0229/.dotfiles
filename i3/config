@@ -35,7 +35,7 @@ exec --no-startup-id /home/raz0229/.alternating_layouts/i3-alternating-layout/al
 exec --no-startup-id feh --bg-scale --zoom fill /home/raz0229/Pictures/cosmos.jpg
 # make pavucontrol floatable
 for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
-exec clipit
+exec xfce4-clipman
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -89,7 +89,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+# bindsym $mod+h split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -187,10 +187,51 @@ bindsym $mod+r mode "resize"
 
 # scratchpad
 # Make the currently focused window a scratchpad
-bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus move scratchpad
 
 # Show the first scratchpad window
-bindsym $mod+minus [class=.*] scratchpad show
+bindsym $mod+Shift+minus [class=.*] scratchpad show
+
+# Caps Lock indicator, seen at
+# https://www.reddit.com/r/i3wm/comments/k8m4k4/share_your_i3_tips_and_tricks_that_you_have/gf2lppd
+mode "-------------------- CAPSLOCK --------------------" {
+    bindsym Caps_Lock mode "default"
+}
+bindsym Caps_Lock mode "-------------------- CAPSLOCK --------------------"
+
+# Font
+#######################################
+# font for window titles
+# ⇒ this is what you see in your i3bar
+set $font-small font xft:Lato 9
+set $font-medium font xft:Lato 14
+
+# Set default font
+$font-small
+
+# lock the screens with a black color background
+bindsym $mod+Delete    $exec i3lock -c 000000
+
+# hide/unhide i3status bar (laptop)
+bindsym $mod+h         bar mode invisible bar-0
+bindsym $mod+Shift+h   bar mode dock bar-0
+
+# hide/unhide i3status bar (monitor)
+# bindsym $mod+b         bar mode invisible bar-1
+# bindsym $mod+Shift+b   bar mode dock bar-1
+
+# Configure border style <normal|1pixel|pixel xx|none|pixel>
+new_window pixel 1
+new_float normal
+
+# Hide borders
+hide_edge_borders none
+
+# change borders
+# bindsym $mod+Shift+n   border none
+# bindsym $mod+n         border pixel 1
+# bindsym $mod+y         border normal 1
+bindsym $mod+b border toggle
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -208,3 +249,12 @@ bar {
 	urgent_workspace #2f343a #900000 #ffffff
   }
 }
+
+# Theme colors
+# class                   border  backgr. text    indic.   child_border
+client.focused #6e3e0e #894f62 #ffffff #dddddd
+client.focused_inactive #333333 #333333 #888888 #292d2e
+client.unfocused #333333 #333333 #888888 #292d2e
+client.urgent #2f343a #900000 #ffffff #900000
+client.placeholder        #000000 #0c0c0c #ffffff #000000 
+client.background         #2B2C2B
