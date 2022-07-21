@@ -13,11 +13,12 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+#font pango:monospace 8
+#font pango:Monofur Regular 11
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
+font pango:DejaVu Sans Mono 8
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -221,8 +222,8 @@ bindsym $mod+Shift+h   bar mode dock bar-0
 # bindsym $mod+Shift+b   bar mode dock bar-1
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-new_window pixel 1
-new_float normal
+new_window pixel 2
+new_float pixel 2
 
 # Hide borders
 hide_edge_borders none
@@ -233,17 +234,37 @@ hide_edge_borders none
 # bindsym $mod+y         border normal 1
 bindsym $mod+b border toggle
 
+# Colors set from ~/.Xresources
+set_from_resource	$background	background
+set_from_resource	$foreground	foreground
+set_from_resource	$color0		color0
+set_from_resource 	$color1 	color1
+set_from_resource 	$color2 	color2
+set_from_resource 	$color3 	color3
+set_from_resource 	$color4 	color4
+set_from_resource 	$color5 	color5
+set_from_resource 	$color6		color6
+set_from_resource	$color7		color7
+set_from_resource	$color8		color8
+set_from_resource	$color9		color9
+set_from_resource	$color10	color10
+set_from_resource	$color11	color11
+set_from_resource	$color12	color12
+set_from_resource	$color13	color13
+set_from_resource	$color14	color14
+set_from_resource	$color15	color15
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-  font pango:DejaVu Sans, Book
+  font pango:DejaVu Sans Mono 10, Book
   position top
   status_command i3status-rs /home/raz0229/.config/i3status-rust/config.toml
   colors {
 	separator #666666
 	background #222222
 	statusline #dddddd
-	focused_workspace #0088CC #0088CC #ffffff
+	focused_workspace #000000 #222222 #ffffff
 	active_workspace #333333 #333333 #ffffff
 	inactive_workspace #333333 #333333 #888888
 	urgent_workspace #2f343a #900000 #ffffff
@@ -251,10 +272,59 @@ bar {
 }
 
 # Theme colors
-# class                   border  backgr. text    indic.   child_border
-client.focused #6e3e0e #894f62 #ffffff #dddddd
-client.focused_inactive #333333 #333333 #888888 #292d2e
-client.unfocused #333333 #333333 #888888 #292d2e
-client.urgent #2f343a #900000 #ffffff #900000
-client.placeholder        #000000 #0c0c0c #ffffff #000000 
-client.background         #2B2C2B
+# class                 border  	backgr. 	text    	indic.  	child_border
+# My colors
+client.background	$background
+
+client.focused         	$foreground	$background	$foreground	$foreground		$foreground	
+client.unfocused       	$foreground	$background	$foreground	$color8		$color8
+client.focused_inactive	$foreground	$background	$foreground	$color8		$color8
+client.urgent		$foreground	$background	$foreground	$color8		$color8
+client.placeholder	$foreground	$background	$foreground	$color8		$color8
+
+
+#############################
+### settings for i3-gaps: ###
+#############################
+
+# Set inner/outer gaps
+gaps inner 2
+gaps outer 2
+
+
+# Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
