@@ -22,6 +22,12 @@ config=(
 "rofi/config.rasi" #rofi dmenu
 )
 
+themes=(
+".icons"
+".fonts"
+".themes"
+)
+
 for item in ${config[@]}; do
 	if [ -f $item ]; then
             echo "=> Linking: $item"
@@ -45,6 +51,17 @@ if [ -f "$localDIR/fish/fish_history" ]; then
 else
 	echo "ERROR: $localDIR/fish/fish_history not found. Please install it first"
 fi
+
+# copy themes and icons
+for item in ${themes[@]}; do
+	if [ -d $item ]; then
+            echo "=> Replacing directory: $item"
+            rm -rf $HOME/$item # removes current DIR
+            cp -R $PWD/$item $HOME/$item
+         else
+            echo "ERROR: $HOME/$item not found. Please install it first"
+         fi
+done
 
 # wallpaper
 feh --bg-scale "$PWD/cosmos.jpg"
