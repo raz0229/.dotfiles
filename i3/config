@@ -33,7 +33,7 @@ exec --no-startup-id nm-applet
 
 # custom scripts
 exec --no-startup-id /home/raz0229/.alternating_layouts/i3-alternating-layout/alternating_layouts.py
-exec --no-startup-id feh --bg-scale --zoom fill /home/raz0229/Pictures/cosmos.jpg
+exec --no-startup-id feh --bg-scale --zoom fill /home/raz0229/.dotfiles/cosmos.jpg
 # make pavucontrol floatable
 for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
 exec xfce4-clipman
