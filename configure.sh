@@ -20,6 +20,7 @@ config=(
 "lvim/config.lua" #lunarvim
 "polybar/config" #polybar
 "rofi/config.rasi" #rofi dmenu
+"neofetch/config.conf" # neofetch
 )
 
 themes=(
